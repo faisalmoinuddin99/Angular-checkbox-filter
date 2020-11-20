@@ -1,0 +1,65 @@
+<div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between start" fxLayoutAlign.lt-md="start stretch"
+	*ngIf="crops$ | async">
+	<div class="container-outer" fxFlex="20">
+		<div class="filters">
+			<section class="example-section">
+				<span class="example-list-section">
+          <h1>Select Crop</h1>
+        </span>
+				<span class="example-list-section">
+          <ul>
+            <li *ngFor="let filter of nameFilters$ | async">
+              <mat-checkbox
+                [checked]="filter.checked"
+                (change)="onNameFilterChange(filter)"
+              >
+                {{ filter.name }}
+              </mat-checkbox>
+            </li>
+          </ul>
+        </span>
+			</section>
+
+			<section class="example-section">
+				<span class="example-list-section">
+          <h1>Select District</h1>
+        </span>
+				<span class="example-list-section">
+          <ul>
+            <li *ngFor="let filter of districtFilters$ | async">
+              <mat-checkbox
+                [checked]="filter.checked"
+                (change)="onDistrictFilterChange(filter)"
+              >
+                {{ filter.name }}
+              </mat-checkbox>
+            </li>
+          </ul>
+        </span>
+			</section>
+		</div>
+	</div>
+	<div class="content container-outer" fxFlex="80">
+		<mat-card class="crop-card" style="min-width: 17%" *ngFor="let crop of filteredCrops$ | async"
+			[hidden]="!crop.checked">
+			<a [routerLink]="[crop.name]">
+				<mat-card-header>
+					<img
+            mat-card-avatar
+            class="example-header-image"
+            src="/assets/icons/crops/{{ crop.name }}.PNG"
+            alt="crop-image"
+          />
+					<mat-card-title>{{ crop.name }}</mat-card-title>
+					<mat-card-subtitle>100 Kgs</mat-card-subtitle>
+				</mat-card-header>
+			</a>
+			<mat-card-content>
+				<p>PRICE</p>
+			</mat-card-content>
+			<mat-card-content>
+				<p>{{ crop.district }}</p>
+			</mat-card-content>
+		</mat-card>
+	</div>
+</div>
